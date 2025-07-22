@@ -106,6 +106,32 @@
         0 0 10px #FF7F00,
         0 0 20px #FF7F00;
     }
+    .donate-button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 24px;
+      font-size: 1.2rem;
+      font-family: 'Courier New', monospace;
+      color: white;
+      background-color: black;
+      border: 2px solid #FF3300;
+      border-radius: 15px;
+      text-decoration: none;
+      box-shadow:
+        0 0 15px #FF3300;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      z-index: 3;
+    }
+    .donate-button:hover {
+      background-color: #FF3300;
+      color: black;
+      box-shadow:
+        0 0 25px #FF3300,
+        0 0 40px #FF3300;
+    }
   </style>
 </head>
 <body>
@@ -138,6 +164,8 @@
       <button onclick="subtractLoss()">Subtract</button>
     </div>
     <div id="timer">0h 0m 0s</div>
+
+    <a href="https://www.donationalerts.com/r/novajeka" target="_blank" rel="noopener noreferrer" class="donate-button">Donate</a>
   </div>
 
   <script>
@@ -197,8 +225,10 @@
 
     function subtractLoss() {
       const val = parseFloat(document.getElementById('loss').value);
-      if (isNaN(val) || val <= 0) return;
-      total -= val;
+      console.log('Subtract input:', val);
+      if (isNaN(val)) return;  // убрал проверку val <= 0, чтобы разрешить вычитать любое положительное число
+      total = Math.max(0, total - val);
+      console.log('New total after subtract:', total);
       document.getElementById('result').innerText = `$${total.toLocaleString()}`;
       document.getElementById('loss').value = '';
     }
